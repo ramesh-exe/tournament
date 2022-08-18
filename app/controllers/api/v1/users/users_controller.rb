@@ -16,9 +16,9 @@ class Api::V1::Users::UsersController < ApplicationController
         if !@user
             return render json: { error: 'invalid_email' }, status: :unauthorized
         end
-        
+
         if @user&.authenticate(params[:password])
-            return render json: {:message => 'user_signin'}, status: :ok
+            return render json: generate_token(@user), status: :ok
         else
             return render json: { error: 'unauthorized' }, status: :unauthorized
         end
